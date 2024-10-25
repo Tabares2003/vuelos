@@ -244,11 +244,16 @@ const Searcher = () => {
             setOptionsDestination([]);
             setClearInputs(false);
         }
-    }, [inputValueDestination, clearInputs]); 
+    }, [inputValueDestination, clearInputs]);
 
     return (
         <>
             <div className={flightResults.length > 0 ? 'mainDiv2' : 'mainDiv'}>
+                <video autoPlay muted loop className="bg-video">
+                    <source src="../../public/vuelo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+
                 <div className='searcherMain'>
                     <div className='whiteCard' style={{ position: 'relative' }}>
                         {loadingSearch && (
@@ -331,7 +336,7 @@ const Searcher = () => {
                                         babiesWithChair={babiesWithChair}
                                         setFlightResults={setFlightResults}
                                         handleCleanSearch={handleCleanSearch}
-                                        flightResults={flightResults} 
+                                        flightResults={flightResults}
                                     />
                                 </Grid>
                             </Grid>
