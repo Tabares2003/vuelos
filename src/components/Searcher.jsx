@@ -16,6 +16,10 @@ import { LuUsers2 } from 'react-icons/lu';
 import { IoIosAddCircleOutline, IoIosSearch } from 'react-icons/io';
 import { GrSubtractCircle } from 'react-icons/gr';
 import AlertDialog from './MuiCustomized/AlertDialog';
+import OriginSearcher from './SearcherComponents/OriginSearcher';
+import FlightResults from './SearcherComponents/FlightResults';
+import DestinationSearcher from './SearcherComponents/DestinationSearcher';
+import PassengerSelector from './SearcherComponents/PassengerSelector';
 
 const Searcher = () => {
 
@@ -61,6 +65,7 @@ const Searcher = () => {
 
     const [openDialogAlert, setOpenDialogAlert] = useState(false);
 
+    const [noResults, setNoResults] = useState(false);
 
     const passengers = [
         { title: "Adults", description: "Adults 12 years of age or older.", count: adults, setCount: setAdults },
@@ -186,6 +191,7 @@ const Searcher = () => {
         }
 
         setLoadingSearch(true);  // Iniciar carga
+        setNoResults(false); // Reiniciar el estado de no resultados
 
         const payload = {
             direct: false,
@@ -215,11 +221,17 @@ const Searcher = () => {
                 data: payload,
             });
 
-            console.log("Search Results:", res.data.data.Seg1);
-            setFlightResults(res.data.data.Seg1 || []);
+            const results = res.data.data.Seg1 || [];
+            setFlightResults(results);
+
+            if (results.length === 0) {
+                setNoResults(true);
+            }
+
         } catch (error) {
             console.error("Error fetching flights:", error);
             setFlightResults([]);
+            setNoResults(true);
         } finally {
             setLoadingSearch(false);  // Terminar carga
         }
@@ -270,100 +282,24 @@ const Searcher = () => {
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
 
-                                    <Grid item xs={2.5}>
-                                        <CustomAutocomplete
-                                            freeSolo
-                                            options={options}
-                                            getOptionLabel={(option) => option.label}
-                                            inputValue={inputValue}
-                                            onInputChange={(event, newValue) => {
-                                                setInputValue(newValue);
-                                                setSelectedAirport(null);
-                                            }}
-                                            onChange={(event, newValue) => {
-                                                setSelectedAirport(newValue ? newValue.data : null);
-                                                console.log("Aeropuerto seleccionado:", newValue ? newValue.data : null);
-                                            }}
-                                            renderOption={(props, option) => (
-                                                <li {...props} className="autocomplete-option">
-                                                    {option.label}
-                                                </li>
-                                            )}
-                                            ListboxProps={{ className: 'autocomplete-options' }}
-                                            renderInput={(params) => (
-                                                <InputMui
-                                                    {...params}
-                                                    placeholder="Origin"
-                                                    InputProps={{
-                                                        ...params.InputProps,
-                                                        endAdornment: (
-                                                            <>
-                                                                {params.InputProps.endAdornment}
-                                                                <InputAdornment position="end">
-                                                                    <span className={loading ? 'loadingFly' : 'flyOrigin'}>
-                                                                        {loading ? <BiLoaderAlt /> : <GiAirplaneArrival />}
-                                                                    </span>
-                                                                </InputAdornment>
-                                                            </>
-                                                        ),
-                                                    }}
-                                                />
-                                            )}
-                                        />
-                                        {options.length === 1 && options[0].label === 'Not found' && !selectedAirport && (
-                                            <div className='divNotFound'>
-                                                <p>No airports found!</p>
-                                            </div>
-                                        )}
-                                    </Grid>
+                                    <OriginSearcher
+                                        options={options}
+                                        inputValue={inputValue}
+                                        setInputValue={setInputValue}
+                                        setSelectedAirport={setSelectedAirport}
+                                        selectedAirport={selectedAirport}
+                                        loading={loading}
+                                    />
 
-
-                                    <Grid item xs={2.5}>
-                                        <CustomAutocomplete
-                                            freeSolo
-                                            options={optionsDestination}
-                                            getOptionLabel={(option) => option.label}
-                                            inputValue={inputValueDestination}
-                                            onInputChange={(event, newValue) => {
-                                                setInputValueDestination(newValue);
-                                                setSelectedAirportDestination(null);
-                                            }}
-                                            onChange={(event, newValue) => {
-                                                setSelectedAirportDestination(newValue ? newValue.data : null);
-                                                console.log("Aeropuerto de destino seleccionado:", newValue ? newValue.data : null);
-                                            }}
-                                            renderOption={(props, option) => (
-                                                <li {...props} className="autocomplete-option">
-                                                    {option.label}
-                                                </li>
-                                            )}
-                                            ListboxProps={{ className: 'autocomplete-options' }}
-                                            renderInput={(params) => (
-                                                <InputMui
-                                                    {...params}
-                                                    placeholder="Destination"
-                                                    InputProps={{
-                                                        ...params.InputProps,
-                                                        endAdornment: (
-                                                            <>
-                                                                {params.InputProps.endAdornment}
-                                                                <InputAdornment position="end">
-                                                                    <span className={loadingDestination ? 'loadingFly' : 'flyOrigin'}>
-                                                                        {loadingDestination ? <BiLoaderAlt /> : <GiAirplaneArrival />}
-                                                                    </span>
-                                                                </InputAdornment>
-                                                            </>
-                                                        ),
-                                                    }}
-                                                />
-                                            )}
-                                        />
-                                        {optionsDestination.length === 1 && optionsDestination[0].label === 'Not found' && !selectedAirportDestination && (
-                                            <div className='divNotFound'>
-                                                <p>No airports found!</p>
-                                            </div>
-                                        )}
-                                    </Grid>
+                                    <DestinationSearcher
+                                        optionsDestination={optionsDestination}
+                                        inputValueDestination={inputValueDestination}
+                                        setInputValueDestination={setInputValueDestination}
+                                        loadingDestination={loadingDestination}
+                                        setLoadingDestination={setLoadingDestination}
+                                        selectedAirportDestination={selectedAirportDestination}
+                                        setSelectedAirportDestination={setSelectedAirportDestination}
+                                    />
 
 
                                     <Grid item xs={2.5} className='inputProvider'>
@@ -382,54 +318,17 @@ const Searcher = () => {
                                         </LocalizationProvider>
                                     </Grid>
 
-                                    <Grid item xs={2.5}>
-                                        <div className='passengersButton' onClick={handleClick}>
-                                            <p>{totalPassengers} passenger{totalPassengers !== 1 ? 's' : ''}</p>
-                                            <LuUsers2 />
-                                        </div>
-                                        <Popover
-                                            id={id}
-                                            open={open}
-                                            anchorEl={anchorEl}
-                                            onClose={handleClose}
-                                            anchorOrigin={{
-                                                vertical: 'bottom',
-                                                horizontal: 'left',
-                                                width: '100px'
-                                            }}
-                                        >
-                                            <div className='divPopover'>
-                                                <div className='topPopover'>
-                                                    <p>PASSENGERS</p>
-                                                </div>
-
-                                                <div>
-                                                    {passengers.map((passenger, index) => (
-                                                        <div key={index} className='divPassengers'>
-                                                            <div className='topPassengers'>
-                                                                <h3>{passenger.title}</h3>
-                                                                <p>{passenger.description}</p>
-                                                            </div>
-                                                            <div className='contentPassengers'>
-                                                                <button
-                                                                    className='lessButton'
-                                                                    onClick={decrement(passenger.setCount, passenger.count, 1)}
-                                                                    disabled={passenger.title === "Adults" && passenger.count <= 1}>
-                                                                    <GrSubtractCircle />
-                                                                </button>
-                                                                <div>
-                                                                    {passenger.count}
-                                                                </div>
-                                                                <button onClick={increment(passenger.setCount, passenger.count)} className='addButton'>
-                                                                    <IoIosAddCircleOutline />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </Popover>
-                                    </Grid>
+                                    <PassengerSelector
+                                        totalPassengers={totalPassengers}
+                                        handleClick={handleClick}
+                                        id={id}
+                                        open={open}
+                                        anchorEl={anchorEl}
+                                        handleClose={handleClose}
+                                        passengers={passengers}
+                                        decrement={decrement}
+                                        increment={increment}
+                                    />
 
                                     <Grid item xs={2} className='searchCont'>
                                         {flightResults.length > 0 ? (
@@ -447,71 +346,19 @@ const Searcher = () => {
                             </Grid>
                         </Grid>
 
-                        {flightResults.length > 0 && (
-                            <div className='mainFlightsFound'>
-                                <div className='topMainFlightsFound'>
-                                    <p>We have found these flights for you! </p>
-                                </div>
-
-                                {currentItems.map((flight, index) => (
-                                    <div className='FlightsFound' key={index}>
-                                        {flight.segments.map((segment, segIndex) => (
-                                            <div key={segIndex} className='divFly'>
-                                                <div className='timeDataMain'>
-                                                    <div>
-                                                        <img src={`https://pics.avs.io/60/60/${segment.companyId.marketingCarrier}.png`} alt={`${segment.companyId.marketingCarrier}`} />
-                                                    </div>
-                                                    <div className='timeData'>
-                                                        <p>{segment.productDateTime.timeOfDeparture}</p>
-                                                        <span>
-                                                            {segment.productDateTime.dayDeparture}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div className='mainLocationsData'>
-                                                    <div className='topLocations'>
-                                                        <GiAirplaneDeparture />
-                                                        <p>Direct</p>
-                                                        <GiAirplaneArrival />
-                                                    </div>
-                                                    <div className='locationsData'>
-                                                        {segment.location.map((loc, locIndex) => (
-                                                            <div key={locIndex}>
-                                                                <p>{loc.locationId}</p>
-                                                                <p>{loc.locationName}</p>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                <div className='timeDataMain'>
-                                                    <div className='timeData'>
-                                                        <p>{segment.productDateTime.timeOfArrival}</p>
-                                                        <span>
-                                                            {segment.productDateTime.dayArrival}
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        <img src={`https://pics.avs.io/60/60/${segment.companyId.operatingCarrier}.png`} alt={`${segment.companyId.operatingCarrier} logo`} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-
-                                    </div>
-                                ))}
-                                <div className='pagination'>
-                                    {Array.from({ length: Math.ceil(flightResults.length / itemsPerPage) }, (_, i) => (
-                                        <button
-                                            key={i}
-                                            onClick={() => handlePageChange(i + 1)}
-                                            className={currentPage === i + 1 ? 'activePagination' : 'paginationButton'}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    ))}
-                                </div>
+                        {noResults && (
+                            <div className='noResults'>
+                                <p>No flights found!</p>
                             </div>
                         )}
+
+                        <FlightResults
+                            flightResults={flightResults}
+                            currentItems={currentItems}
+                            itemsPerPage={itemsPerPage}
+                            currentPage={currentPage}
+                            handlePageChange={handlePageChange}
+                        />
                     </div>
                 </div>
 
