@@ -1,0 +1,518 @@
+:root {
+  --bodyFontFamily: "Roboto", sans-serif !important;
+  --naranja: #FF9F43;
+  --darkBlue: #104172;
+}
+
+
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+}
+
+.mainDiv {
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainDiv2 {
+  width: 100%;
+  height: 100vh;
+}
+
+.searcherMain {
+  width: 100%;
+  min-height: 320px;
+  background-color: #104172;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.whiteCard {
+  background-color: white;
+  min-height: 140px;
+  width: 86%;
+  border-radius: 18px;
+  padding: 12px;
+  padding-bottom: 32px;
+}
+
+.titleWhiteCard {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.titleWhiteCard h2 {
+  font-size: 16px;
+  color: var(--darkBlue);
+}
+
+.titleWhiteCard svg {
+  font-size: 26px;
+  color: var(--darkBlue);
+  margin-bottom: 5px;
+  transform: rotate(44deg);
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(-1px);
+  }
+
+  50% {
+    transform: translateY(1px);
+  }
+
+  75% {
+    transform: translateY(-1px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.titleWhiteCard>svg:hover {
+  animation: vibrate 0.2s infinite;
+}
+
+.flyOrigin {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.flyOrigin {
+  color: var(--darkBlue);
+  font-size: 27px;
+}
+
+.loadingFly {
+  color: var(--darkBlue);
+  font-size: 27px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingFly {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+.divNotFound {
+  width: 100%;
+  color: var(--darkBlue);
+  margin-top: 10px;
+}
+
+.divNotFound p {
+  color: var(--darkBlue) !important;
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 !important;
+}
+
+.autocomplete-option {
+  color: var(--darkBlue);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-align: start;
+  min-height: 17px;
+  font-weight: 500;
+  padding: 8px;
+}
+
+.autocomplete-option:hover {
+  background-color: rgb(234, 234, 234);
+}
+
+.autocomplete-options {
+  max-height: 190px !important;
+  /* Ajusta el máximo alto */
+  overflow-y: auto;
+}
+
+.autocomplete-options::-webkit-scrollbar {
+  width: 8px;
+  /* Ancho del scroll */
+}
+
+.autocomplete-options::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* Color del scroll */
+  border-radius: 10px;
+}
+
+.autocomplete-options::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+  /* Color del scroll al pasar el mouse */
+}
+
+.inputProvider div {
+  border-radius: 3px !important;
+  height: 42px;
+  color: var(--darkBlue) !important;
+}
+
+.passengersButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px !important;
+  height: 42px;
+  color: var(--darkBlue) !important;
+  cursor: pointer;
+}
+
+.passengersButton p {
+  margin-left: 8px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.passengersButton svg {
+  margin-right: 8px;
+  font-size: 22px;
+}
+
+.divPopover {
+  border-radius: 8px;
+  width: 220px;
+  padding: 14px;
+  cursor: pointer;
+  padding-top: 25px !important;
+}
+
+.topPopover {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.topPopover p {
+  color: var(--darkBlue);
+  margin: 0 !important;
+  font-weight: 550 !important;
+  font-size: 14px;
+}
+
+.divPassengers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.topPassengers {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: start;
+  gap: 2px;
+}
+
+.topPassengers h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--darkBlue);
+}
+
+.topPassengers p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 450;
+  color: rgb(100, 134, 145);
+}
+
+.contentPassengers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid var(--darkBlue);
+  border-radius: 6px;
+}
+
+.contentPassengers button {
+  width: 20%;
+  cursor: pointer;
+  background-color: var(--darkBlue);
+  color: white;
+  font-size: 14px;
+  height: 23px;
+  border: 0;
+}
+
+.contentPassengers button svg {
+  font-size: 17px;
+}
+
+.contentPassengers div {
+  width: 60%;
+  height: 21px;
+  text-align: center;
+}
+
+.addButton {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.lessButton {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.addButton svg {
+  font-size: 22px !important;
+}
+
+.searchCont div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px !important;
+  height: 42px;
+  color: white !important;
+  cursor: pointer;
+  background-color: var(--darkBlue);
+  gap: 6px;
+}
+
+.searchCont div p {
+  font-size: 18px;
+  font-weight: 450;
+}
+
+.searchCont div svg {
+  font-size: 25px;
+  color: white;
+}
+
+.loadingDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  border-radius: 12px;
+  justify-content: center;
+  gap: 2rem;
+  color: white !important;
+}
+
+.loadingDiv p {
+  font-size: 22px;
+  font-weight: 450;
+}
+
+.mainFlightsFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.FlightsFound {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  border: 1px solid #D9D9D9;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.topMainFlightsFound {
+  width: 100%;
+  text-align: start;
+  margin-bottom: 1.5rem;
+}
+
+.topMainFlightsFound p {
+  font-size: 18x;
+  color: var(--darkBlue);
+  margin: 0;
+  font-weight: 450;
+}
+
+.divFly {
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.divFly div {
+  width: 33.3%;
+}
+.timeDataMain{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  color: var(--darkBlue);
+}
+.timeData {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: var(--darkBlue);
+}
+.timeData p{
+  font-size: 17px;
+  color: var(--darkBlue);
+  margin: 0;
+}
+.timeData span{
+  color: #808080;
+}
+.locationsData {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 70% !important;
+}
+
+.mainLocationsData {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.topLocations {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 53% !important;
+  border-bottom: 2px solid #D9D9D9;
+  margin-bottom: 14px;
+}
+
+.locationsData p {
+  margin: 0;
+}
+
+.topLocations svg {
+  color: var(--darkBlue);
+  font-size: 24px;
+}
+
+.topLocations p {
+  color: #808080;
+  font-size: 13px; 
+}
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.paginationButton{
+  background-color: var(--darkBlue);
+  color: white;
+  padding: 8px;
+  border: none;
+  width: 30px;
+  cursor: pointer;
+}
+.activePagination{
+  background-color: white;
+  border: 2px solid var(--darkBlue);
+  color: var(--darkBlue);
+  padding: 8px; 
+  width: 30px;
+  cursor: pointer;
+}
+.mainDialogoConfirmacion {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+.topConfirmacion {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topConfirmacion svg {
+  font-size: 39px;
+}
+.topConfirmacion p {
+  margin: 0;
+  color: #1B2850;
+  font-weight: 600;
+  font-size: 20px;
+}
+.closeIcon {
+  color: red;
+  cursor: pointer;
+}
+
+.alertIcon {
+  color: #FF9F43;
+}
+
+.medioConfirmacion {
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.medioConfirmacion p {
+  font-size: 18px;
+  font-weight: 500; 
+  margin: 0;
+  color: #1B2850;
+}
+
+.botonesConfirmacion {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
